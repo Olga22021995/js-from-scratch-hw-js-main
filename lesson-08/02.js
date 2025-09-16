@@ -4,45 +4,48 @@
  */
 
 function isNumeric(str) {
-    if (typeof str !== 'string' || str.trim() === '') {
-        return false;
-    }
-    
+    // Убираем пробелы в начале и конце строки
     const trimmedStr = str.trim();
     
-    // Проверяем специальные случаи
-    if (trimmedStr === '.' || trimmedStr === '-' || trimmedStr === '+') {
+    // Проверяем пустую строку после trim
+    if (trimmedStr === '') {
         return false;
     }
     
+    // Проверяем каждый символ в строке
     let hasDot = false;
-    let hasSign = false;
+    let hasDigits = false;
     
-    // Проверяем каждый символ
     for (let i = 0; i < trimmedStr.length; i++) {
         const char = trimmedStr[i];
         
-        // Проверяем знак в начале
-        if (i === 0 && (char === '-' || char === '+')) {
-            hasSign = true;
+        // Проверяем знак + или - только в начале строки
+        if (i === 0 && (char === '+' || char === '-')) {
             continue;
         }
         
         // Проверяем точку
         if (char === '.') {
-            if (hasDot) return false; // Уже была точка
+            if (hasDot) return false; // Если точка уже была - невалидно
             hasDot = true;
             continue;
         }
         
         // Проверяем цифры
-        if (char < '0' || char > '9') {
-            return true;
+        if (char >= '0' && char <= '9') {
+            hasDigits = true;
+            continue;
         }
+        
+        // Если символ не цифра, не точка и не знак в начале - невалидно
+        return false;
     }
     
-    return true;
+    // Должна быть хотя бы одна цифра
+    return hasDigits;
 }
+
+
 // console.log(isNumeric("123")) // Ожидаемый результат: true
 // console.log(isNumeric("12.3")) // Ожидаемый результат: true
 // console.log(isNumeric("123abc")) // Ожидаемый результат: false
