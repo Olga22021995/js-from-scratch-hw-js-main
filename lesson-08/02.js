@@ -11,29 +11,42 @@ function isNumeric(str) {
     
     const trimmedStr = str.trim();
     
+    // Специальные случаи
+    if (trimmedStr === '.' || trimmedStr === '-' || trimmedStr === '+') {
+        return false;
+    }
+    
+    let hasDot = false;
+    let hasDigits = false;
+    
     // Проверяем каждый символ
     for (let i = 0; i < trimmedStr.length; i++) {
         const char = trimmedStr[i];
         
-        // Разрешаем цифры, знак минус только в начале, и точку только один раз
+        // Разрешаем знак только в начале
         if (i === 0 && (char === '-' || char === '+')) {
-            continue; // Разрешаем знак в начале
-        }
-        
-        if (char === '.') {
-            // Точка разрешена, но только одна и не в начале/конце
-            if (i === 0 || i === trimmedStr.length - 1 || trimmedStr.indexOf('.') !== i) {
-                return false;
-            }
             continue;
         }
         
-        if (char < '0' || char > '9') {
-            return false;
+        // Проверяем точку
+        if (char === '.') {
+            if (hasDot) return false; // Уже была точка
+            hasDot = true;
+            continue;
         }
+        
+        // Проверяем цифры
+        if (char >= '0' && char <= '9') {
+            hasDigits = true;
+            continue;
+        }
+        
+        // Любой другой символ - невалидный
+        return false;
     }
     
-    return trimmedStr !== '.' && trimmedStr !== '-' && trimmedStr !== '+';
+    // Должна быть хотя бы одна цифра
+    return hasDigits;
 }
 
 // console.log(isNumeric("123")) // Ожидаемый результат: true
