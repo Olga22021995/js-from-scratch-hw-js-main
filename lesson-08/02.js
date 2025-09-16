@@ -4,38 +4,45 @@
  */
 
 function isNumeric(str) {
-  // your codefunction isNumeric(str) {
     if (typeof str !== 'string' || str.trim() === '') {
         return false;
     }
     
     const trimmedStr = str.trim();
     
+    // Проверяем специальные случаи
+    if (trimmedStr === '.' || trimmedStr === '-' || trimmedStr === '+') {
+        return false;
+    }
+    
+    let hasDot = false;
+    let hasSign = false;
+    
     // Проверяем каждый символ
     for (let i = 0; i < trimmedStr.length; i++) {
         const char = trimmedStr[i];
         
-        // Разрешаем цифры, знак минус только в начале, и точку только один раз
+        // Проверяем знак в начале
         if (i === 0 && (char === '-' || char === '+')) {
-            continue; // Разрешаем знак в начале
-        }
-        
-        if (char === '.') {
-            // Точка разрешена, но только одна и не в начале/конце
-            if (i === 0 || i === trimmedStr.length - 1 || trimmedStr.indexOf('.') !== i) {
-                return false;
-            }
+            hasSign = true;
             continue;
         }
         
+        // Проверяем точку
+        if (char === '.') {
+            if (hasDot) return false; // Уже была точка
+            hasDot = true;
+            continue;
+        }
+        
+        // Проверяем цифры
         if (char < '0' || char > '9') {
             return false;
         }
     }
     
-    return trimmedStr !== '.' && trimmedStr !== '-' && trimmedStr !== '+';
+    return true;
 }
-
 // console.log(isNumeric("123")) // Ожидаемый результат: true
 // console.log(isNumeric("12.3")) // Ожидаемый результат: true
 // console.log(isNumeric("123abc")) // Ожидаемый результат: false
