@@ -10,20 +10,40 @@
 */
 
 
+
+
+
 function truncate(str, maxLength) {
-    if (typeof str !== 'string' || typeof maxLength !== 'number' || maxLength <= 0) {
-        return typeof str === 'string' ? str : '';
+    // Проверяем, что строка действительно строка, а maxLength - число
+    if (typeof str !== 'string' || typeof maxLength !== 'number') {
+        return str;
     }
     
+    // Если максимальная длина меньше или равна 0, возвращаем пустую строку
+    if (maxLength <= 0) {
+        return '';
+    }
+    
+    // Если длина строки не превышает максимальную длину, возвращаем исходную строку
     if (str.length <= maxLength) {
         return str;
     }
     
+    // Если максимальная длина меньше или равна 3, просто обрезаем строку
     if (maxLength <= 3) {
         return str.slice(0, maxLength);
     }
     
-    return str.substring(0, maxLength - 3) + '...';
+    // Обрезаем строку до (maxLength - 3) символов и добавляем многоточие
+    return str.slice(0, maxLength - 3) + '...';
 }
+
+// Тестирование примеров из условия
+console.log(truncate("Вот, что мне действительно нравится в этом", 20)); 
+// "Вот, что мне действи..."
+
+console.log(truncate("Короткая строка", 20)); 
+// "Короткая строка"
+
 
 
