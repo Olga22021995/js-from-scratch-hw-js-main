@@ -7,7 +7,7 @@
 */
 
 
-function capitalizeWords() {
+function capitalizeWords(str) {
     let result = '';
     let capitalizeNext = true;
     
