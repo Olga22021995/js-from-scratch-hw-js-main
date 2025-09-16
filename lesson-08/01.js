@@ -8,25 +8,20 @@
 
 
 function capitalizeWords() {
-    // Если строка пустая, возвращаем пустую строку
-    if (str.length === 0) return '';
-    
     let result = '';
     let capitalizeNext = true;
-
+    
     for (let i = 0; i < str.length; i++) {
-        const currentChar = str[i];
+        const char = str[i];
         
-        // Если нужно capitalize следующий символ и это буква
-        if (capitalizeNext && currentChar !== ' ') {
-            result += currentChar.toUpperCase();
+        if (capitalizeNext && char !== ' ') {
+            result += char.toUpperCase();
             capitalizeNext = false;
         } else {
-            result += currentChar;
+            result += char;
         }
         
-        // Если текущий символ - пробел, следующий символ нужно capitalize
-        if (currentChar === ' ') {
+        if (char === ' ') {
             capitalizeNext = true;
         }
     }
@@ -34,9 +29,5 @@ function capitalizeWords() {
     return result;
 }
 
-// Тестирование функции
+// Пример использования
 console.log(capitalizeWords("hello world from javascript")); // "Hello World From Javascript"
-console.log(capitalizeWords("  multiple   spaces  here  ")); // "  Multiple   Spaces  Here  "
-console.log(capitalizeWords("")); // ""
-console.log(capitalizeWords("single")); // "Single"
-console.log(capitalizeWords("a b c d")); // "A B C D"
