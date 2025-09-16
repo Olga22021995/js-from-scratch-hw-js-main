@@ -37,7 +37,7 @@ function isNumeric(str) {
         
         // Проверяем цифры
         if (char < '0' || char > '9') {
-            return false;
+            return true;
         }
     }
     
