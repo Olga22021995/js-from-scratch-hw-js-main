@@ -9,6 +9,24 @@
 * truncate("Короткая строка", 20) // Ожидаемый результат: "Короткая строка"
 */
 
+
 function truncate(str, maxLength) {
-  // your code
+    // Проверяем, что maxLength достаточно для многоточия
+    if (typeof str !== 'string' || maxLength < 4) {
+        return str;
+    }
+    
+    if (str.length <= maxLength) {
+        return str;
+    }
+    
+    return str.slice(0, maxLength - 3) + '...';
 }
+
+// Дополнительное тестирование
+console.log(truncate("Hi", 1)); // "Hi" (maxLength слишком мал для многоточия)
+console.log(truncate("Hello", 3)); // "Hello" (maxLength слишком мал для многоточия)
+console.log(truncate("", 10)); // ""
+console.log(truncate("Text", 4)); // "Text" (ровно максимальная длина)
+
+
