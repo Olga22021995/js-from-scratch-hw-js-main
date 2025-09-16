@@ -42,3 +42,50 @@ cancelButton.addEventListener('click', () => {
   // your code
 })
 
+
+
+
+
+const startButton = document.getElementById('start')
+const cancelButton = document.getElementById('cancel')
+const countdownDisplay = document.getElementById('countdown')
+
+let isTimerStarted = false
+let timerId
+
+startButton.addEventListener('click', () => {
+  // Если таймер уже запущен, ничего не делаем
+  if (isTimerStarted) {
+    return
+  }
+  
+  isTimerStarted = true
+  let counter = 3
+  
+  // Немедленно отображаем начальное значение
+  countdownDisplay.textContent = counter
+  
+  // Запускаем таймер
+  timerId = setInterval(() => {
+    counter--
+    
+    if (counter > 0) {
+      // Показываем текущее значение счетчика
+      countdownDisplay.textContent = counter
+    } else if (counter === 0) {
+      // Когда счетчик достиг 0, показываем ракету
+      countdownDisplay.textContent = '🚀'
+      clearInterval(timerId)
+      isTimerStarted = false
+    }
+  }, 1000)
+})
+
+cancelButton.addEventListener('click', () => {
+  // Отменяем только если таймер запущен
+  if (isTimerStarted) {
+    clearInterval(timerId)
+    countdownDisplay.textContent = 'Отменено'
+    isTimerStarted = false
+  }
+})

@@ -67,6 +67,11 @@ clearCartButton.addEventListener('click', function () {
   updateCartDisplay()
 })
 
+
+
+
+
+
 // Твой код:
 // Добавляем обработчик события на контейнер petShop
 petShop.addEventListener('click', function(event) {
@@ -90,3 +95,5 @@ petShop.addEventListener('click', function(event) {
         messageBox.textContent = '';
     }
 });
+
+
