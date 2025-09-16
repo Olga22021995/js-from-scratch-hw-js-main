@@ -11,22 +11,30 @@
 
 
 function truncate(str, maxLength) {
-    // Проверяем, что maxLength достаточно для многоточия
-    if (typeof str !== 'string' || maxLength < 4) {
-        return str;
-    }
-    
+    // Если длина строки меньше или равна максимальной, возвращаем исходную строку
     if (str.length <= maxLength) {
         return str;
     }
     
+    // Обрезаем строку до maxLength - 3 (чтобы осталось место для многоточия)
+    // и добавляем многоточие в конец
     return str.slice(0, maxLength - 3) + '...';
 }
 
-// Дополнительное тестирование
-console.log(truncate("Hi", 1)); // "Hi" (maxLength слишком мал для многоточия)
-console.log(truncate("Hello", 3)); // "Hello" (maxLength слишком мал для многоточия)
-console.log(truncate("", 10)); // ""
-console.log(truncate("Text", 4)); // "Text" (ровно максимальная длина)
+// Тестирование
+console.log(truncate("Вот, что мне действительно нравится в этом", 20)); 
+// "Вот, что мне действи..."
+
+console.log(truncate("Короткая строка", 20)); 
+// "Короткая строка"
+
+console.log(truncate("Hello world", 5)); 
+// "He..."
+
+console.log(truncate("Test", 10)); 
+// "Test"
+
+console.log(truncate("Very long text that needs to be truncated", 15)); 
+// "Very long te..."
 
 

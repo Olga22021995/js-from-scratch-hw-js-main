@@ -3,48 +3,38 @@
  * Если строка является числом, функция должна возвращать true, в противном случае - false.
  */
 
+
 function isNumeric(str) {
-    // Убираем пробелы в начале и конце строки
-    const trimmedStr = str.trim();
-    
-    // Проверяем пустую строку после trim
-    if (trimmedStr === '') {
+    if (typeof str !== 'string' || str.trim() === '') {
         return false;
     }
     
-    // Проверяем каждый символ в строке
-    let hasDot = false;
-    let hasDigits = false;
+    const trimmedStr = str.trim();
     
+    // Проверяем каждый символ
     for (let i = 0; i < trimmedStr.length; i++) {
         const char = trimmedStr[i];
         
-        // Проверяем знак + или - только в начале строки
-        if (i === 0 && (char === '+' || char === '-')) {
-            continue;
+        // Разрешаем цифры, знак минус только в начале, и точку только один раз
+        if (i === 0 && (char === '-' || char === '+')) {
+            continue; // Разрешаем знак в начале
         }
         
-        // Проверяем точку
         if (char === '.') {
-            if (hasDot) return false; // Если точка уже была - невалидно
-            hasDot = true;
+            // Точка разрешена, но только одна и не в начале/конце
+            if (i === 0 || i === trimmedStr.length - 1 || trimmedStr.indexOf('.') !== i) {
+                return false;
+            }
             continue;
         }
         
-        // Проверяем цифры
-        if (char >= '0' && char <= '9') {
-            hasDigits = true;
-            continue;
+        if (char < '0' || char > '9') {
+            return false;
         }
-        
-        // Если символ не цифра, не точка и не знак в начале - невалидно
-        return false;
     }
     
-    // Должна быть хотя бы одна цифра
-    return hasDigits;
+    return trimmedStr !== '.' && trimmedStr !== '-' && trimmedStr !== '+';
 }
-
 
 // console.log(isNumeric("123")) // Ожидаемый результат: true
 // console.log(isNumeric("12.3")) // Ожидаемый результат: true
